@@ -9,6 +9,8 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Insets;
@@ -29,6 +31,9 @@ import Dominio.Usuario;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.AbstractListModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.JScrollPane;
 
 public class IU_VistaGeneral extends JPanel {
 	private JPanel pnl_infoUsuario;
@@ -42,7 +47,6 @@ public class IU_VistaGeneral extends JPanel {
 	private JButton btn_VistaGestionProyectosTareas;
 	private JPanel pnl_botonInfoUsuario;
 	private JPanel pnl_vistaUsuario;
-	private JList list_usuarios;
 	private JPanel pnl_usuario;
 	private JLabel lblNombre;
 	private JTextField txt_nombre;
@@ -63,22 +67,11 @@ public class IU_VistaGeneral extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public void rellenarListaUsuarios() {
-		Usuario u1=new Usuario("Alejandro","Velasco");
-		Usuario u2=new Usuario("Fernando","Ruiz");
-		Usuario u3=new Usuario("Rafael","Varon");
-		Usuario u4=new Usuario("Francisco","Bolaños");
-		Usuario u5=new Usuario("Monica","Romero");
-		Usuario[] u=new Usuario[5];
-		DefaultListModel modelo = new DefaultListModel();
-		for(int i=0;i<5;i++) {
-			modelo.addElement(u[i].toString());
-		}
-		list_usuarios.setModel(modelo);
-	}
+
+	
 	public IU_VistaGeneral() {
-		setSize(new Dimension(1280, 720));
-		setMinimumSize(new Dimension(1280, 720));
+		setSize(new Dimension(800, 600));
+		setMinimumSize(new Dimension(800, 600));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 89, 0};
 		gridBagLayout.rowHeights = new int[]{95, 0, 0};
@@ -184,24 +177,16 @@ public class IU_VistaGeneral extends JPanel {
 		pnl_contenido.add(pnl_vistaUsuario, "Vista Usuarios");
 		GridBagLayout gbl_pnl_vistaUsuario = new GridBagLayout();
 		gbl_pnl_vistaUsuario.columnWidths = new int[]{0, 0, 0};
-		gbl_pnl_vistaUsuario.rowHeights = new int[]{0, 0};
-		gbl_pnl_vistaUsuario.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_pnl_vistaUsuario.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_pnl_vistaUsuario.rowHeights = new int[]{0, 0, 0};
+		gbl_pnl_vistaUsuario.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_pnl_vistaUsuario.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		pnl_vistaUsuario.setLayout(gbl_pnl_vistaUsuario);
-		
-		list_usuarios = new JList();
-		list_usuarios.setBorder(new TitledBorder(null, "Lista de usuarios", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_list_usuarios = new GridBagConstraints();
-		gbc_list_usuarios.insets = new Insets(0, 0, 0, 5);
-		gbc_list_usuarios.fill = GridBagConstraints.BOTH;
-		gbc_list_usuarios.gridx = 0;
-		gbc_list_usuarios.gridy = 0;
-		pnl_vistaUsuario.add(list_usuarios, gbc_list_usuarios);
 		
 		
 		pnl_usuario = new JPanel();
 		pnl_usuario.setBorder(new TitledBorder(null, "Informaci\u00F3n de Usuario", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnl_usuario = new GridBagConstraints();
+		gbc_pnl_usuario.insets = new Insets(0, 0, 5, 0);
 		gbc_pnl_usuario.fill = GridBagConstraints.BOTH;
 		gbc_pnl_usuario.gridx = 1;
 		gbc_pnl_usuario.gridy = 0;
@@ -341,13 +326,15 @@ public class IU_VistaGeneral extends JPanel {
 	private class Btn_infoUsuarioActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			IU_pnlInfoUsuario iu=new IU_pnlInfoUsuario();
-			((CardLayout) pnl_infoUsuario.getLayout()).show(pnl_infoUsuario,"panel Info");
+			JFrame j=new JFrame();
+			j.getContentPane().add(iu);
+			
+			//((CardLayout) pnl_infoUsuario.getLayout()).show(pnl_infoUsuario,"panel Info");
 			
 		}
 	}
 	private class BtnVistaUsuariosActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			rellenarListaUsuarios();
 			((CardLayout)pnl_contenido.getLayout()).show(pnl_contenido,"Vista Usuarios");
 		}
 	}
